@@ -1,0 +1,113 @@
+*mockaroo* *mockaroo.vim*
+
+                                             'o0NMMN0d,
+                                         .:kXMMMMMMMMMMNk:.
+                                       :0MMMMMMMMMMMMMMMMMMO,
+                                    .oNMMMMMMMMMMMMMMMMMMMMMMK;
+                                  .xMMMMMMMMMMMMMMMMMMMMMMMMMMMK'        ldl:.
+                                .dWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMk.       cXMMK;
+                               lNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWc        .'cX0:d;
+                             ;XMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMK;.     .lOWMMMMWx;
+                           ;KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMXOk0MMMMMMMMMMMW0l.
+                         :XMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO
+'                     .lXMMMMMMMMMWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMOlOOo;,'':,
+o:                  ;OMMMMMMMMWOc. :XMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMX:
+ oO,            .:xNMMMMMMMKo,       :XMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWO;
+  .kNxc,...';lxXMMMMMMMXx;             cXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMO.
+    .oKMMMMMMMMMMMW0d:.                  .l0MMMMMMMMMMMMMMMk::o0WMMMMMMMMNx
+       .,cooooc;'.                          .:xKMMMMMMMMMW;     KMMMM0l,.
+                                                0MMMMMMMW'     dMMMN;
+                                                 KMMMMMMX     .MMMO.
+                                                 .OMMMMMW   . ,MWl
+                                                   0MMMMM. .O;OK'
+                                                   .WMMMM.   ..
+                                                    oMMMM;
+                                                     KMMMo
+                                                     'MMMX.
+                                                      xMMMMKko:'
+                                                       xNWMMMMMMMN0dc,.
+                                                           ..,:ldk0XNMMWKko:'.'.
+                                                                      ..';:okXMMk,
+                                                                               .
+
+
+
+                                 ,--.                                            ,--.
+          ,--,--,--. ,---.  ,---.|  |,-. ,--,--.,--.--. ,---.  ,---.   ,--.  ,--.`--',--,--,--.
+          |        || .-. || .--'|     /' ,-.  ||  .--'| .-. || .-. |   \  `'  / ,--.|        |
+          |  |  |  |' '-' '\ `--.|  \  \\ '-'  ||  |   ' '-' '' '-' '.--.\    /  |  ||  |  |  |
+          '--'--'--' '---'  '---''--''--''--'--''--'    '---'  '---' '--' '--'   '--''--'--'--'
+
+
+
+Unofficial Vim client for mockaroo.com -- the realistic test data generator.
+
+                                                                                     *mockaroo-toc*
+1. Introduction                                                             |mockaroo-introduction|
+2. Configuration                                                           |mockaroo-configuration|
+  2.1 mockaroo.com setup                                            |mockaroo-configuration-online|
+  2.2 vim setup                                                     |mockaroo-configuration-in-vim|
+3. Usage                                                                           |mockaroo-usage|
+  3.1 Replace visual selection                            |mockaroo-usage-replace-visual-selection|
+  3.2 Insert after cursor                                      |mockaroo-usage-insert-after-cursor|
+  3.3 API                                                                      |mockaroo-usage-api|
+
+===================================================================================================
+1. Introduction                                                             *mockaroo-introduction*
+
+Insert realistic test data while editing with a single command -- choose from any of
+Mockaroo's 140+ data types.
+
+===================================================================================================
+2. Configuration                                                           *mockaroo-configuration*
+
+First you must set up your mockaroo.com account, then you must configure the vim plugin.
+
+2.1 mockaroo.com setup                                              *mockaroo-configuration-online*
+---------------------------------------------------------------------------------------------------
+
+  ‣ Create a Mockaroo account
+  ‣ Create a Mockaroo schema containing all of the data you want to be able to insert. Choose JSON
+      for the format
+  ‣ Create a Mockaroo api for that schema, make note of the https url (not the curl url)
+
+2.2 vim setup                                                       *mockaroo-configuration-in-vim*
+---------------------------------------------------------------------------------------------------
+
+In your vimrc, configure your Mockaroo api url
+>
+  let g:mockaroo_api = 'https://my.api.mockaroo.com/standard.json?key=00000000'
+<
+
+(Except that your key will be something other than 00000000)
+
+
+Define a command for each of the data types in your schema. For example, if your schema contains a
+date, email, and company:
+
+>
+  command! -range MEmail call mockaroo#insert('email', <count>)
+  command! -range MCompany call mockaroo#insert('company', <count>)
+  command! -range MDate call mockaroo#insert('date', <count>)
+<
+
+===================================================================================================
+3. Usage                                                                           *mockaroo-usage*
+These instructions assume you have defined commands as described in |mockaroo-configuration-in-vim|
+
+We'll use the `MDate` command in these examples:
+
+3.1 Replace visual selection                              *mockaroo-usage-replace-visual-selection*
+---------------------------------------------------------------------------------------------------
+Visually select a block, then execute `:MDate`. This will replace the selected text with a new date.
+
+3.2 Insert after cursor                                        *mockaroo-usage-insert-after-cursor*
+---------------------------------------------------------------------------------------------------
+In normal mode, execute `:MDate`. This will insert a date after the cursor.
+
+3.3 API                                                                        *mockaroo-usage-api*
+---------------------------------------------------------------------------------------------------
+
+>
+  mockaroo#get('email')
+<
