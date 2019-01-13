@@ -11,6 +11,10 @@ let s:cursor = 0
 function! mockaroo#get(key)
   let l:result = s:data[s:cursor]
   let s:cursor = s:cursor + 1
+  if !has_key(l:result, a:key)
+    echoerr "No '" . a:key . "' in the mockaroo data. Available keys: " . join(keys(l:result), ",")
+    return "<mockaroo-error: '" . a:key . "' key not found>"
+  endif
   return l:result[a:key]
 endfunction
 
